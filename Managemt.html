@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Management </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    .navbar a:hover {
+      color: #ffcc00;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Section Titles */
+    .section-title {
+      text-align: center;
+      margin: 30px 0;
+      font-size: 1.8rem;
+      color: #444;
+      text-transform: uppercase;
+    }
+
+    /* Forms and Tables */
+    form, table {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    /* Parent Portal Button */
+    .parent-portal {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .parent-portal a {
+      background: #333;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .parent-portal a:hover {
+      background: #555;
+    }
+
+    /* Notifications */
+    .notification {
+      padding: 10px;
+      background: #dff0d8;
+      color: #3c763d;
+      border: 1px solid #d6e9c6;
+      border-radius: 5px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <span>🎓 Student Management System</span>
+    <div>
+      <a href="#students">Students</a>
+      <a href="#teachers">Teachers</a>
+      <a href="#classes">Classes</a>
+      <a href="#attendance">Attendance</a>
+      <a href="#fees">Fees</a>
+      <a href="#grades">Grades</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Student Management -->
+    <div id="students">
+      <h2 class="section-title">Student Management</h2>
+      <form id="student-form">
+        <input type="text" id="student-name" placeholder="Student Name" required>
+        <input type="number" id="student-age" placeholder="Age" required>
+        <input type="text" id="student-class" placeholder="Class" required>
+        <input type="text" id="student-contact" placeholder="Contact" required>
+        <button type="button" onclick="addStudent()">Add Student</button>
+      </form>
+      <table id="student-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Class</th>
+            <th>Contact</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Teacher Management -->
+    <div id="teachers">
+      <h2 class="section-title">Teacher Management</h2>
+      <form id="teacher-form">
+        <input type="text" id="teacher-name" placeholder="Teacher Name" required>
+        <input type="text" id="teacher-subject" placeholder="Subject" required>
+        <button type="button" onclick="addTeacher()">Add Teacher</button>
+      </form>
+      <table id="teacher-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Class Management -->
+    <div id="classes">
+      <h2 class="section-title">Class Management</h2>
+      <form id="class-form">
+        <input type="text" id="class-name" placeholder="Class Name" required>
+        <input type="text" id="class-teacher" placeholder="Class Teacher" required>
+        <button type="button" onclick="addClass()">Add Class</button>
+      </form>
+      <table id="class-table">
+        <thead>
+          <tr>
+            <th>Class Name</th>
+            <th>Class Teacher</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Attendance -->
+    <div id="attendance">
+      <h2 class="section-title">Attendance</h2>
+      <form id="attendance-form">
+        <input type="date" id="attendance-date" required>
+        <button type="button" onclick="markAttendance()">Mark Attendance</button>
+      </form>
+      <div class="notification" id="attendance-notification" style="display: none;">Attendance marked successfully!</div>
+    </div>
+
+    <!-- Fee Management -->
+    <div id="fees">
+      <h2 class="section-title">Fee Management</h2>
+      <form id="fee-form">
+        <input type="text" id="fee-student" placeholder="Student Name" required>
+        <input type="number" id="fee-amount" placeholder="Amount" required>
+        <button type="button" onclick="recordFee()">Record Fee</button>
+      </form>
+      <table id="fee-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Grades -->
+    <div id="grades">
+      <h2 class="section-title">Grades</h2>
+      <form id="grades-form">
+        <input type="text" id="grades-student" placeholder="Student Name" required>
+        <input type="text" id="grades-subject" placeholder="Subject" required>
+        <input type="text" id="grades-grade" placeholder="Grade" required>
+        <button type="button" onclick="addGrade()">Add Grade</button>
+      </form>
+      <table id="grades-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Subject</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Parent Portal -->
+    <div class="parent-portal">
+      <a href="#students">Parent Portal ➡️</a>
+    </div>
+  </div>
+
+  <script>
+    // Add student
+    function addStudent() {
+      const name = document.getElementById('student-name').value;
+      const age = document.getElementById('student-age').value;
+      const cls = document.getElementById('student-class').value;
+      const contact = document.getElementById('student-contact').value;
+      const table = document.getElementById('student-table').querySelector('tbody');
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${age}</td>
+        <td>${cls}</td>
+        <td>${contact}</td>
+        <td><button onclick="this.closest('tr').remove()">Delete</button></td>
+      `;
+      table.appendChild(row);
+    }
+
+    // Add teacher
+    function addTeacher() {
+      const name = document.getElementById('teacher-name').value;
+      const subject = document.getElementById('teacher-subject').value;
+      const table = document.getElementById('teacher-table').querySelector('tbody');
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${subject}</td>
+        <td><button onclick="this.closest('tr').remove()">Delete</button></td>
+      `;
+      table.appendChild(row);
+    }
+
+    // Add class
+    function addClass() {
+      const name = document.getElementById('class-name').value;
+      const teacher = document.getElementById('class-teacher').value;
+      const table = document.getElementById('class-table').querySelector('tbody');
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${teacher}</td>
+        <td><button onclick="this.closest('tr').remove()">Delete</button></td>
+      `;
+      table.appendChild(row);
+    }
+
+    // Mark attendance
+    function markAttendance() {
+      document.getElementById('attendance-notification').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('attendance-notification').style.display = 'none';
+      }, 3000);
+    }
+
+    // Record fee
+    function recordFee() {
+      const name = document.getElementById('fee-student').value;
+      const amount = document.getElementById('fee-amount').value;
+      const date = new Date().toLocaleDateString();
+      const table = document.getElementById('fee-table').querySelector('tbody');
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${amount}</td>
+        <td>${date}</td>
+      `;
+      table.appendChild(row);
+    }
+
+    // Add grade
+    function addGrade() {
+      const student = document.getElementById('grades-student').value;
+      const subject = document.getElementById('grades-subject').value;
+      const grade = document.getElementById('grades-grade').value;
+      const table = document.getElementById('grades-table').querySelector('tbody');
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${student}</td>
+        <td>${subject}</td>
+        <td>${grade}</td>
+      `;
+      table.appendChild(row);
+    }
+  </script>
+</body>
+</html>
